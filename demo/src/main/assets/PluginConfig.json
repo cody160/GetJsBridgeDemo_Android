@@ -1,0 +1,31 @@
+{
+    "update": "",
+    "module": "mapp",
+    "plugins": [
+        {
+            "pluginname": "device",
+            "pluginclass": "com.getpay.demoApp.plugins.GetDevice",
+            "exports": [
+                {
+                    "showmethod": "getDeviceInfo",
+                    "realmethod": "getDeviceInfo"
+                }
+            ]
+        },
+        {
+            "pluginname": "app",
+            "pluginclass": "com.getpay.demoApp.plugins.GetAppInfo",
+            "exports": []
+        },
+        {
+            "pluginname": "nav",
+            "pluginclass": "com.getpay.demoApp.plugins.GetNavCtrl",
+            "exports": []
+        },
+        {
+            "pluginname": "ui",
+            "pluginclass": "com.getpay.demoApp.plugins.GetUIGlobalCtrl",
+            "exports": []
+        }
+    ]
+}

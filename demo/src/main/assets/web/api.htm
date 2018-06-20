@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <title>Mobile JS API Demo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <style type="text/css" media="screen">
+    	button.btn{
+    		margin: 5px;
+    	}
+    	.btn:focus {
+		  outline: none;
+		}
+    	.text-center {
+			text-align: center;
+			color: blue;
+    	}
+    	.btn-primary {
+    		border-radius: 25px;
+			background: #8AC007;
+			padding: 10px;
+			color: white;
+    	}
+    </style>
+</head>
+<body style="background: #fff">
+	<h1 class="text-center">Mobile JS API Demo</h1>
+	<h3 class="text-center">This is an H5 webpage</h3>
+	<div id="container" class="container">
+	</div>
+
+	<hr>
+	<p><b>Device</b> System & Hardware Info</p>
+    <button class="btn btn-primary" onclick="getDevice(2)">Get Device Info</button><br/>
+	<button class="btn btn-primary" onclick="getDevice(3)">Get Product Name</button><br/>
+
+	<hr>
+	<p><b>App:</b> App Related APIs</p>
+	<button class="btn btn-primary" onclick="getAppInfo(1)">Launch Settings Screen</button><br/>
+
+	<hr>
+	<p><b>UI:</b> UI Related APIs</p>
+	<button class="btn btn-primary" onclick="getUICtrl(1)">Redirect to Wikipedia</button><br/>
+	<button class="btn btn-primary" onclick="getUICtrl(2)">Close Current Webpage</button><br/>
+	<button class="btn btn-primary" onclick="getUICtrl(3)">Show Native Dialog</button><br/>
+	<hr>
+    <script src="./zepto.js"></script>
+<script>
+document.addEventListener("GetJSBridgeServiceReady", function(){
+	console.log("eventlistender");
+}, false);
+
+$(document).ready(function() {
+	console.log("document.ready");
+});
+
+
+function clear(){
+	$('#textarea').val('');
+	log(location.href);
+}
+
+// Device & hardware related APIs
+function getDevice(type){
+	switch (type){
+		case 1:
+			mapp.device.isMobileApp(function(result){
+				alert(result);
+			});
+			break;
+		case 2:
+			mapp.device.getDeviceInfo(function(data){
+				alert(JSON.stringify(data));
+			});
+			break;
+		case 3:
+			mapp.device.getProductName(function(data){
+				alert(JSON.stringify(data));
+			});
+			break;
+
+	}
+}
+
+// App related APIs
+function getAppInfo(type){
+	switch (type){
+		case 1:
+			mapp.app.launchSettings(function(data){
+				alert(data);
+			});
+			break;
+
+	}
+}
+
+// UI related APIs
+function getUICtrl(type, n){
+	switch (type){
+		case 1:
+			mapp.ui.openUrl({
+				target: 0,
+				url: 'http://www.wikipedia.com'
+			});
+			break;
+
+		case 2:
+			mapp.ui.popBack(function(result){
+				alert(result);
+			});
+			break;
+
+		case 3:
+			mapp.ui.showDialog({
+				title: 'A Native Dialog',
+				text: 'This is a native dialog box invoked from H5',
+				needOkBtn: true,
+				needCancelBtn: true,
+				okBtnText: 'OK',
+				cancelBtnText: 'CANCEL'
+			}, function(result) {
+				result = JSON.parse(result);
+				alert('Returned value : ' + result.button);
+			});
+			break;
+	}
+}
+</script></body></html>
